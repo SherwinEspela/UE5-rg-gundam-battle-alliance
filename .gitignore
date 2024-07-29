@@ -72,3 +72,15 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+RGGundamBA/Binaries/
+RGGundamBA/Config/
+RGGundamBA/Content/__ExternalActors__/
+RGGundamBA/Content/__ExternalObjects__/
+RGGundamBA/Content/Characters/
+RGGundamBA/Content/LevelPrototyping/
+RGGundamBA/Content/StarterContent/
+RGGundamBA/Content/ThirdPerson/
+RGGundamBA/Intermediate/
+RGGundamBA/Saved/
+RGGundamBA/.vsconfig
+RGGundamBA/UpgradeLog.htm
