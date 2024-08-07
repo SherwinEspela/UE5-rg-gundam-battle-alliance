@@ -61,5 +61,3 @@ void AGundamRX93Character::Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
-
-
