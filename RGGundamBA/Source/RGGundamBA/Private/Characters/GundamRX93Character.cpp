@@ -6,6 +6,8 @@
 #include "InputActionValue.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Gameframework/CharacterMovementComponent.h"
+#include "Items/Weapons/RX93Rifle.h"
+#include "Items/Weapons/RX93Shield.h"
 
 AGundamRX93Character::AGundamRX93Character()
 {
@@ -40,6 +42,25 @@ void AGundamRX93Character::BeginPlay()
 	CameraBoom->bInheritRoll = true;
 
 	FollowCamera->bUsePawnControlRotation = true;
+
+	AttachWeapons();
+}
+
+void AGundamRX93Character::AttachWeapons()
+{
+	FAttachmentTransformRules TransformRules(EAttachmentRule::SnapToTarget, true);
+
+	if (RifleClass)
+	{
+		Rifle = GetWorld()->SpawnActor<ARX93Rifle>(RifleClass);
+		Rifle->AttachToComponent(GetMesh(), TransformRules, FName("RightHandWeaponSocket"));
+	}
+
+	if (ShieldClass)
+	{	
+		Shield = GetWorld()->SpawnActor<ARX93Shield>(ShieldClass);
+		Shield->AttachToComponent(GetMesh(), TransformRules, FName("ShieldSocket"));
+	}
 }
 
 void AGundamRX93Character::Move(const FInputActionValue& Value)

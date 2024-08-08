@@ -8,6 +8,8 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class ARX93Rifle;
+class ARX93Shield;
 struct FInputActionValue;
 
 /**
@@ -28,6 +30,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void AttachWeapons();
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Camera Property")
@@ -35,4 +38,15 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera Property")
 	UCameraComponent* FollowCamera;
+
+protected:
+	// Weapons
+	UPROPERTY(EditAnywhere, Category = Weapon)
+	TSubclassOf<ARX93Rifle> RifleClass;
+
+	UPROPERTY(EditAnywhere, Category = Weapon)
+	TSubclassOf<ARX93Shield> ShieldClass;
+
+	TObjectPtr<ARX93Rifle> Rifle;
+	TObjectPtr<ARX93Shield> Shield;
 };
