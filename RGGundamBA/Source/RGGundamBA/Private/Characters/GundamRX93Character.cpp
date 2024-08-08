@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "InputActionValue.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Gameframework/CharacterMovementComponent.h"
 
 AGundamRX93Character::AGundamRX93Character()
 {
@@ -19,6 +20,10 @@ AGundamRX93Character::AGundamRX93Character()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = true;
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->MaxAcceleration = 2900.f;
+	GetCharacterMovement()->MaxWalkSpeed = 2900.f;
 }
 
 void AGundamRX93Character::BeginPlay()
