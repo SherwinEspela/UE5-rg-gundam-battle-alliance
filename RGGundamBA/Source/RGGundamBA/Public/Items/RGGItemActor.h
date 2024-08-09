@@ -6,8 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "RGGItemActor.generated.h"
 
-class UStaticMeshComponent;
-
 UCLASS()
 class RGGUNDAMBA_API ARGGItemActor : public AActor
 {
@@ -18,9 +16,5 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
-protected:
-	UPROPERTY(EditAnywhere, Category = "Item Mesh")
-	TObjectPtr<UStaticMeshComponent> Mesh;
 
 };
