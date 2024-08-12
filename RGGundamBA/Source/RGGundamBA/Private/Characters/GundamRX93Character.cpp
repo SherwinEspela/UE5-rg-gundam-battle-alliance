@@ -6,8 +6,10 @@
 #include "InputActionValue.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Gameframework/CharacterMovementComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Items/Weapons/RX93Rifle.h"
 #include "Items/Weapons/RX93Shield.h"
+#include "RGGAAnimations/RX93AnimInstance.h"
 
 AGundamRX93Character::AGundamRX93Character()
 {
@@ -43,6 +45,8 @@ void AGundamRX93Character::BeginPlay()
 
 	FollowCamera->bUsePawnControlRotation = true;
 
+	RX93AnimInstance = Cast<URX93AnimInstance>(GetMesh()->GetAnimInstance());
+
 	AttachWeapons();
 }
 
@@ -74,6 +78,7 @@ void AGundamRX93Character::Move(const FInputActionValue& Value)
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		AddMovementInput(ForwardDirection, MovementVector.Y);
 		AddMovementInput(RightDirection, MovementVector.X);
+		MovementStopped(false);
 	}
 }
 
@@ -86,4 +91,18 @@ void AGundamRX93Character::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AGundamRX93Character::MovementStopped(bool Value)
+{
+	if (RX93AnimInstance)
+	{
+		RX93AnimInstance->MovementStopped(Value);
+	}
+
+}
+
+void AGundamRX93Character::Jump()
+{
+
 }

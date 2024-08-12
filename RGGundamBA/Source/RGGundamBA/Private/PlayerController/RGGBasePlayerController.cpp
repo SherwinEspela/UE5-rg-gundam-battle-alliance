@@ -22,7 +22,9 @@ void ARGGBasePlayerController::SetupInputComponent()
 
 	EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ARGGBasePlayerController::Move);
+	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &ARGGBasePlayerController::MoveStopped);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARGGBasePlayerController::Look);
+	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ARGGBasePlayerController::Jump);
 }
 
 void ARGGBasePlayerController::Move(const FInputActionValue& Value)
@@ -33,4 +35,14 @@ void ARGGBasePlayerController::Move(const FInputActionValue& Value)
 void ARGGBasePlayerController::Look(const FInputActionValue& Value)
 {
 	PlayerCharacter->Look(Value);
+}
+
+void ARGGBasePlayerController::MoveStopped(const FInputActionValue& Value)
+{
+	PlayerCharacter->MovementStopped(true);
+}
+
+void ARGGBasePlayerController::Jump()
+{
+	PlayerCharacter->Jump();
 }

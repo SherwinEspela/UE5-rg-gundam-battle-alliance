@@ -10,6 +10,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class ARX93Rifle;
 class ARX93Shield;
+class URX93AnimInstance;
 struct FInputActionValue;
 
 /**
@@ -27,6 +28,8 @@ public:
 	// Player Actions and Movement
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void MovementStopped(bool Value);
+	void Jump() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -38,6 +41,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera Property")
 	UCameraComponent* FollowCamera;
+
+	URX93AnimInstance* RX93AnimInstance;
 
 protected:
 	// Weapons

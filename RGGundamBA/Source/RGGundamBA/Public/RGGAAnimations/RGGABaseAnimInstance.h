@@ -31,8 +31,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement)
 	FRotator MovementRotation;
 
+	UPROPERTY(BlueprintReadOnly, Category = Movement)
+	TObjectPtr<UCharacterMovementComponent> MovementComponent;
+
 private:
 	TObjectPtr<ARGGBaseCharacter> BaseCharacter;
-	TObjectPtr<UCharacterMovementComponent> MovementComponent;
+	
 	
 };

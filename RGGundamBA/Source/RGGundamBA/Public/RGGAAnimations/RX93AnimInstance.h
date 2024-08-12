@@ -15,5 +15,13 @@ class RGGUNDAMBA_API URX93AnimInstance : public URGGABaseAnimInstance
 {
 	GENERATED_BODY()
 	
+public:
+	void MovementStopped(bool Value);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void HandleMovementStopped();
+
+protected:
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsMovementStopped = false;
 };

@@ -40,8 +40,13 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Player Input")
 	UInputAction* LookAction;
 
+	UPROPERTY(EditAnywhere, Category = "Player Input")
+	UInputAction* JumpAction;
+
 protected:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void MoveStopped(const FInputActionValue& Value);
+	void Jump();
 	
 };
