@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Copyright 2024 Sherwin Espela. All rights reserved.
 
 #include "Characters/GundamRX93Character.h"
 #include "Camera/CameraComponent.h"
@@ -10,6 +9,7 @@
 #include "Items/Weapons/RX93Rifle.h"
 #include "Items/Weapons/RX93Shield.h"
 #include "RGGAAnimations/RX93AnimInstance.h"
+#include "ActorComponents/GroundHeightDetectorAC.h"
 
 AGundamRX93Character::AGundamRX93Character()
 {
@@ -28,6 +28,8 @@ AGundamRX93Character::AGundamRX93Character()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->MaxAcceleration = 2900.f;
 	GetCharacterMovement()->MaxWalkSpeed = 2900.f;
+
+	GroundHeightDetector = CreateDefaultSubobject<UGroundHeightDetectorAC>(TEXT("Ground Height Detector"));
 }
 
 void AGundamRX93Character::BeginPlay()
@@ -104,5 +106,11 @@ void AGundamRX93Character::MovementStopped(bool Value)
 
 void AGundamRX93Character::Jump()
 {
+	Super::Jump();
+	GetCharacterMovement()->bNotifyApex = true;
+}
 
+void AGundamRX93Character::HandleReachedJumpApex()
+{
+	if (GroundHeightDetector) GroundHeightDetector->MeasureGroundDistance();
 }

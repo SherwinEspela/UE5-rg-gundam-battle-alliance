@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2024 Sherwin Espela. All rights reserved.
 
 #pragma once
 
@@ -11,6 +11,7 @@ class UCameraComponent;
 class ARX93Rifle;
 class ARX93Shield;
 class URX93AnimInstance;
+class UGroundHeightDetectorAC;
 struct FInputActionValue;
 
 /**
@@ -35,6 +36,9 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void AttachWeapons();
 
+	UFUNCTION(BlueprintCallable)
+	void HandleReachedJumpApex();
+
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Camera Property")
 	USpringArmComponent* CameraBoom;
@@ -43,6 +47,9 @@ protected:
 	UCameraComponent* FollowCamera;
 
 	URX93AnimInstance* RX93AnimInstance;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Ground Height Detector")
+	UGroundHeightDetectorAC* GroundHeightDetector;
 
 protected:
 	// Weapons
