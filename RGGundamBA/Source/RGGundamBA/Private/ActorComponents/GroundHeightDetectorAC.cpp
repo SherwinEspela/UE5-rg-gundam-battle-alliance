@@ -13,10 +13,8 @@ UGroundHeightDetectorAC::UGroundHeightDetectorAC()
 void UGroundHeightDetectorAC::BeginPlay()
 {
 	Super::BeginPlay();
-
 	bCanMeasure = false;
 }
-
 
 void UGroundHeightDetectorAC::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -53,20 +51,22 @@ void UGroundHeightDetectorAC::CheckDistanceToGroundByLineTrace()
 
 	if (bHitSuccess)
 	{
-		DrawDebugSphere(GetWorld(), Hit.ImpactPoint, 100.f, 30.f, FColor::Red, false);
-		DrawDebugSphere(GetWorld(), LineTraceStart, 100.f, 30.f, FColor::Green, false);
-		DrawDebugLine(GetWorld(), LineTraceStart, LineTraceEnd, FColor::Red, false);
 		float Distance = FVector::Distance(LineTraceStart, Hit.ImpactPoint);
-		
 		DistanceToGround = Distance - DISTANCE_OFFSET;
-		//UE_LOG(LogTemp, Warning, TEXT("DistanceToGround === %f"), DistanceToGround);
+
+		if (bIsDebugging)
+		{
+			DrawDebugSphere(GetWorld(), Hit.ImpactPoint, 100.f, 30.f, FColor::Red, false);
+			DrawDebugSphere(GetWorld(), LineTraceStart, 100.f, 30.f, FColor::Green, false);
+			DrawDebugLine(GetWorld(), LineTraceStart, LineTraceEnd, FColor::Red, false);
+			UE_LOG(LogTemp, Warning, TEXT("DistanceToGround === %f"), DistanceToGround);
+		}
+		
 		if (DistanceToGround <= 0.f || DistanceToGround <= 0.1f)
 		{
 			Reset();
 			OnDistanceToGroundReached.Broadcast();
 		}
-
-		// apex to ground value = 510.320129
 	}
 }
 

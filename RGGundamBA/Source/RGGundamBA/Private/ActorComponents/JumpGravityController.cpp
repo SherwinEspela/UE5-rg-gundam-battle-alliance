@@ -16,7 +16,6 @@ void UJumpGravityController::BeginPlay()
 	Super::BeginPlay();
 	
 	bCanAdjustGravity = false;
-
 	AGundamRX93Character* Gundam = CastChecked<AGundamRX93Character>(GetOwner());
 	CharacterMovement = Gundam->GetCharacterMovement();
 	CharacterMovement->GravityScale = GravityScaleReset;
@@ -31,18 +30,12 @@ void UJumpGravityController::TickComponent(float DeltaTime, ELevelTick TickType,
 		if (bJumpStarted && CharacterMovement->GravityScale > 1.0f)
 		{
 			CharacterMovement->GravityScale -= GravityScaleDecreaseRate;
-		/*	UE_LOG(LogTemp, Warning, TEXT("CharacterMovement->GravityScale === %f"),
-				CharacterMovement->GravityScale);*/
 		}
 		else if (bJumpApexReached)
 		{
 			CharacterMovement->GravityScale += GravityScaleIncreaseRate;
-			//UE_LOG(LogTemp, Warning, TEXT("CharacterMovement->GravityScale === %f"),
-				//CharacterMovement->GravityScale);
 		}
 	}
-
-	//CurveGravityAfterApex->GetFloatValue(DeltaTime);
 }
 
 void UJumpGravityController::HandleJumpStarted()

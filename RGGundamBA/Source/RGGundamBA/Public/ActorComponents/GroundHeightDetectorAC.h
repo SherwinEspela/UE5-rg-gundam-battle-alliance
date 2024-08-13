@@ -15,6 +15,7 @@ class RGGUNDAMBA_API UGroundHeightDetectorAC : public UActorComponent
 
 public:	
 	UGroundHeightDetectorAC();
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void MeasureGroundDistance();
 
@@ -33,8 +34,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY(EditAnywhere, Category = "Debugging")
+	bool bIsDebugging = false;
 
 private:
 	void CheckDistanceToGroundByLineTrace();
