@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "GroundHeightDetectorAC.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDistanceToGroundReached);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class RGGUNDAMBA_API UGroundHeightDetectorAC : public UActorComponent
@@ -16,7 +17,9 @@ public:
 	UGroundHeightDetectorAC();
 
 	void MeasureGroundDistance();
-	void CheckDistanceToGroundByLineTrace();
+
+	UFUNCTION(BlueprintCallable)
+	void Reset();
 
 public:
 	UPROPERTY(BlueprintReadonly, Category = "Distance to Ground")
@@ -25,10 +28,15 @@ public:
 	UPROPERTY(BlueprintReadonly, Category = "Distance to Ground")
 	bool bCanMeasure = false;
 
+	FDistanceToGroundReached OnDistanceToGroundReached;
+
 protected:
 	virtual void BeginPlay() override;
 
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+private:
+	void CheckDistanceToGroundByLineTrace();
 
 };

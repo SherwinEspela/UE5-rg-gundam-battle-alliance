@@ -10,6 +10,7 @@
 #include "Items/Weapons/RX93Shield.h"
 #include "RGGAAnimations/RX93AnimInstance.h"
 #include "ActorComponents/GroundHeightDetectorAC.h"
+#include "ActorComponents/JumpGravityController.h"
 
 AGundamRX93Character::AGundamRX93Character()
 {
@@ -30,6 +31,7 @@ AGundamRX93Character::AGundamRX93Character()
 	GetCharacterMovement()->MaxWalkSpeed = 2900.f;
 
 	GroundHeightDetector = CreateDefaultSubobject<UGroundHeightDetectorAC>(TEXT("Ground Height Detector"));
+	JumpGravityController = CreateDefaultSubobject<UJumpGravityController>(TEXT("Jump Gravity Controller"));
 }
 
 void AGundamRX93Character::BeginPlay()
@@ -50,6 +52,8 @@ void AGundamRX93Character::BeginPlay()
 	RX93AnimInstance = Cast<URX93AnimInstance>(GetMesh()->GetAnimInstance());
 
 	AttachWeapons();
+
+	GroundHeightDetector->OnDistanceToGroundReached.AddDynamic(this, &AGundamRX93Character::HandleDistanceToGroundReached);
 }
 
 void AGundamRX93Character::AttachWeapons()
@@ -101,16 +105,29 @@ void AGundamRX93Character::MovementStopped(bool Value)
 	{
 		RX93AnimInstance->MovementStopped(Value);
 	}
-
 }
 
 void AGundamRX93Character::Jump()
 {
 	Super::Jump();
 	GetCharacterMovement()->bNotifyApex = true;
+	JumpGravityController->HandleJumpStarted();
 }
 
 void AGundamRX93Character::HandleReachedJumpApex()
 {
 	if (GroundHeightDetector) GroundHeightDetector->MeasureGroundDistance();
+	if (JumpGravityController)
+	{
+		JumpGravityController->HandleJumpApexReached();
+	}
+}
+
+void AGundamRX93Character::HandleDistanceToGroundReached()
+{
+	UE_LOG(LogTemp, Warning, TEXT("HandleDistanceToGroundReached"));
+	if (JumpGravityController)
+	{
+		JumpGravityController->Reset();
+	}
 }

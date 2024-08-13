@@ -33,6 +33,12 @@ void UGroundHeightDetectorAC::MeasureGroundDistance()
 	bCanMeasure = true;
 }
 
+void UGroundHeightDetectorAC::Reset()
+{
+	bCanMeasure = false;
+	DistanceToGround = DISTANCE_OFFSET;
+}
+
 void UGroundHeightDetectorAC::CheckDistanceToGroundByLineTrace()
 {
 	FVector LineTraceStart = GetOwner()->GetActorLocation();
@@ -54,10 +60,10 @@ void UGroundHeightDetectorAC::CheckDistanceToGroundByLineTrace()
 		
 		DistanceToGround = Distance - DISTANCE_OFFSET;
 		//UE_LOG(LogTemp, Warning, TEXT("DistanceToGround === %f"), DistanceToGround);
-		if (DistanceToGround <= 0.f)
+		if (DistanceToGround <= 0.f || DistanceToGround <= 0.1f)
 		{
-			bCanMeasure = false;
-			DistanceToGround = DISTANCE_OFFSET;
+			Reset();
+			OnDistanceToGroundReached.Broadcast();
 		}
 
 		// apex to ground value = 510.320129

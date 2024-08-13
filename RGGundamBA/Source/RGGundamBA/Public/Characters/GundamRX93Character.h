@@ -12,6 +12,7 @@ class ARX93Rifle;
 class ARX93Shield;
 class URX93AnimInstance;
 class UGroundHeightDetectorAC;
+class UJumpGravityController;
 struct FInputActionValue;
 
 /**
@@ -39,6 +40,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void HandleReachedJumpApex();
 
+	UFUNCTION()
+	void HandleDistanceToGroundReached();
+
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Camera Property")
 	USpringArmComponent* CameraBoom;
@@ -50,6 +54,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Ground Height Detector")
 	UGroundHeightDetectorAC* GroundHeightDetector;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Jump Gravity Controller")
+	UJumpGravityController* JumpGravityController;
 
 protected:
 	// Weapons
