@@ -125,7 +125,6 @@ void AGundamRX93Character::HandleReachedJumpApex()
 
 void AGundamRX93Character::HandleDistanceToGroundReached()
 {
-	UE_LOG(LogTemp, Warning, TEXT("HandleDistanceToGroundReached"));
 	if (JumpGravityController)
 	{
 		JumpGravityController->Reset();
