@@ -13,6 +13,7 @@ class ARX93Shield;
 class URX93AnimInstance;
 class UGroundHeightDetectorAC;
 class UJumpGravityController;
+class UThrusterVfxController;
 struct FInputActionValue;
 
 /**
@@ -43,6 +44,8 @@ protected:
 	UFUNCTION()
 	void HandleDistanceToGroundReached();
 
+	void SetThrusterVFXActive(bool Value);
+
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Camera Property")
 	USpringArmComponent* CameraBoom;
@@ -58,6 +61,33 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Jump Gravity Controller")
 	UJumpGravityController* JumpGravityController;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "VFX")
+	UThrusterVfxController* ThrusterVfxController;
+
+	UPROPERTY(EditAnywhere, Category = Effects)
+	UParticleSystemComponent* FXBackpackFXLT;
+
+	UPROPERTY(EditAnywhere, Category = Effects)
+	UParticleSystemComponent* FXBackpackFXRT;
+
+	UPROPERTY(EditAnywhere, Category = Effects)
+	UParticleSystemComponent* FXBackpackFXLB;
+
+	UPROPERTY(EditAnywhere, Category = Effects)
+	UParticleSystemComponent* FXBackpackFXRB;
+
+	UPROPERTY(EditAnywhere, Category = Effects)
+	UParticleSystemComponent* FXCalfFXL;
+
+	UPROPERTY(EditAnywhere, Category = Effects)
+	UParticleSystemComponent* FXCalfFXR;
+
+	UPROPERTY(EditAnywhere, Category = Effects)
+	UParticleSystemComponent* FXFootFXL;
+
+	UPROPERTY(EditAnywhere, Category = Effects)
+	UParticleSystemComponent* FXFootFXR;
+
 protected:
 	// Weapons
 	UPROPERTY(EditAnywhere, Category = Weapon)
@@ -68,4 +98,5 @@ protected:
 
 	TObjectPtr<ARX93Rifle> Rifle;
 	TObjectPtr<ARX93Shield> Shield;
+
 };

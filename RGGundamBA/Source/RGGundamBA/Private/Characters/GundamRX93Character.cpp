@@ -11,6 +11,8 @@
 #include "RGGAAnimations/RX93AnimInstance.h"
 #include "ActorComponents/GroundHeightDetectorAC.h"
 #include "ActorComponents/JumpGravityController.h"
+#include "ActorComponents/ThrusterVfxController.h"
+#include "Particles/ParticleSystemComponent.h"
 
 AGundamRX93Character::AGundamRX93Character()
 {
@@ -32,6 +34,40 @@ AGundamRX93Character::AGundamRX93Character()
 
 	GroundHeightDetector = CreateDefaultSubobject<UGroundHeightDetectorAC>(TEXT("Ground Height Detector"));
 	JumpGravityController = CreateDefaultSubobject<UJumpGravityController>(TEXT("Jump Gravity Controller"));
+	ThrusterVfxController = CreateDefaultSubobject<UThrusterVfxController>(TEXT("Thruster Controller"));
+
+	FXBackpackFXLT = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FXBackpackFXLT"));
+	FXBackpackFXLT->SetupAttachment(GetMesh(), FName("SocketBackpackVfxLT"));
+
+	FXBackpackFXRT = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FXBackpackFXRT"));
+	FXBackpackFXRT->SetupAttachment(GetMesh(), FName("SocketBackpackVfxRT"));
+
+	FXBackpackFXLB = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FXBackpackFXLB"));
+	FXBackpackFXLB->SetupAttachment(GetMesh(), FName("SocketBackpackVfxLB"));
+
+	FXBackpackFXRB = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FXBackpackFXRB"));
+	FXBackpackFXRB->SetupAttachment(GetMesh(), FName("SocketBackpackVfxRB"));
+
+	FXCalfFXL = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FXCalfFXL"));
+	FXCalfFXL->SetupAttachment(GetMesh(), FName("SocketCalfVfxL"));
+
+	FXCalfFXR = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FXCalfFXR"));
+	FXCalfFXR->SetupAttachment(GetMesh(), FName("SocketCalfVfxR"));
+
+	FXFootFXL = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FXFootFXL"));
+	FXFootFXL->SetupAttachment(GetMesh(), FName("SocketFootVfxL"));
+
+	FXFootFXR = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("FXFootFXR"));
+	FXFootFXR->SetupAttachment(GetMesh(), FName("SocketFootVfxR"));
+
+	FXBackpackFXLT->SetWorldScale3D(FVector(15.f, 15.f, 15.f));
+	FXBackpackFXRT->SetWorldScale3D(FVector(15.f, 15.f, 15.f));
+	FXBackpackFXLB->SetWorldScale3D(FVector(15.f, 15.f, 15.f));
+	FXBackpackFXRB->SetWorldScale3D(FVector(15.f, 15.f, 15.f));
+	FXCalfFXL->SetWorldScale3D(FVector(15.f, 15.f, 15.f));
+	FXCalfFXR->SetWorldScale3D(FVector(15.f, 15.f, 15.f));
+	FXFootFXL->SetWorldScale3D(FVector(15.f, 15.f, 15.f));
+	FXFootFXR->SetWorldScale3D(FVector(15.f, 15.f, 15.f));
 }
 
 void AGundamRX93Character::BeginPlay()
@@ -54,6 +90,8 @@ void AGundamRX93Character::BeginPlay()
 	AttachWeapons();
 
 	GroundHeightDetector->OnDistanceToGroundReached.AddDynamic(this, &AGundamRX93Character::HandleDistanceToGroundReached);
+
+	SetThrusterVFXActive(false);
 }
 
 void AGundamRX93Character::AttachWeapons()
@@ -112,6 +150,7 @@ void AGundamRX93Character::Jump()
 	Super::Jump();
 	GetCharacterMovement()->bNotifyApex = true;
 	JumpGravityController->HandleJumpStarted();
+	SetThrusterVFXActive(true);
 }
 
 void AGundamRX93Character::HandleReachedJumpApex()
@@ -121,6 +160,8 @@ void AGundamRX93Character::HandleReachedJumpApex()
 	{
 		JumpGravityController->HandleJumpApexReached();
 	}
+
+	SetThrusterVFXActive(false);
 }
 
 void AGundamRX93Character::HandleDistanceToGroundReached()
@@ -129,4 +170,16 @@ void AGundamRX93Character::HandleDistanceToGroundReached()
 	{
 		JumpGravityController->Reset();
 	}
+}
+
+void AGundamRX93Character::SetThrusterVFXActive(bool Value)
+{
+	FXBackpackFXLT->SetActive(Value);
+	FXBackpackFXRT->SetActive(Value);
+	FXBackpackFXLB->SetActive(Value);
+	FXBackpackFXRB->SetActive(Value);
+	FXCalfFXL->SetActive(Value);
+	FXCalfFXR->SetActive(Value);
+	FXFootFXL->SetActive(Value);
+	FXFootFXR->SetActive(Value);
 }
