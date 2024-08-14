@@ -55,6 +55,9 @@ protected:
 
 	URX93AnimInstance* RX93AnimInstance;
 
+protected:
+	// Actor Components
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "Ground Height Detector")
 	UGroundHeightDetectorAC* GroundHeightDetector;
 
@@ -63,6 +66,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly, Category = "VFX")
 	UThrusterVfxController* ThrusterVfxController;
+
+protected:
+	// VFX
 
 	UPROPERTY(EditAnywhere, Category = Effects)
 	UParticleSystemComponent* FXBackpackFXLT;
@@ -90,6 +96,7 @@ protected:
 
 protected:
 	// Weapons
+
 	UPROPERTY(EditAnywhere, Category = Weapon)
 	TSubclassOf<ARX93Rifle> RifleClass;
 
