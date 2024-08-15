@@ -12,18 +12,6 @@ ARGGBaseCharacter::ARGGBaseCharacter()
 void ARGGBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	MovementState = EMovementStates::EMS_Idle;
 }
-
-void ARGGBaseCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-void ARGGBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-

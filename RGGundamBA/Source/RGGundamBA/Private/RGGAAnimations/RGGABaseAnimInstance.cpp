@@ -5,6 +5,7 @@
 #include "Gameframework/CharacterMovementComponent.h"
 #include "Characters/RGGBaseCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Enums/MovementStatesEnum.h"
 
 void URGGABaseAnimInstance::NativeInitializeAnimation()
 {
@@ -31,5 +32,21 @@ void URGGABaseAnimInstance::NativeUpdateAnimation(float DeltaTime)
 		{
 			MovementSpeed = UKismetMathLibrary::VSizeXY(MovementComponent->Velocity);
 		}
+	}
+}
+
+void URGGABaseAnimInstance::HandleIdleAnimationStarted()
+{
+	if (BaseCharacter)
+	{
+		BaseCharacter->SetMovementState(EMovementStates::EMS_Idle);
+	}
+}
+
+void URGGABaseAnimInstance::HandleJumpAnimationEnded()
+{
+	if (BaseCharacter)
+	{
+		BaseCharacter->SetMovementState(EMovementStates::EMS_Idle);
 	}
 }

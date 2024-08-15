@@ -105,5 +105,4 @@ protected:
 
 	TObjectPtr<ARX93Rifle> Rifle;
 	TObjectPtr<ARX93Shield> Shield;
-
 };

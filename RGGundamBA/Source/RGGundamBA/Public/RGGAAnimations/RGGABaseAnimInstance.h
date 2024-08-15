@@ -21,6 +21,13 @@ public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaTime) override;
 
+public:
+	UFUNCTION(BlueprintCallable)
+	virtual void HandleIdleAnimationStarted();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void HandleJumpAnimationEnded();
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = Movement)
 	float MovementSpeed;
@@ -36,6 +43,5 @@ protected:
 
 private:
 	TObjectPtr<ARGGBaseCharacter> BaseCharacter;
-	
 	
 };

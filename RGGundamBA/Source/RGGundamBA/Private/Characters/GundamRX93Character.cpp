@@ -113,6 +113,8 @@ void AGundamRX93Character::AttachWeapons()
 
 void AGundamRX93Character::Move(const FInputActionValue& Value)
 {
+	if (MovementState == EMovementStates::EMS_Jumping) return;
+
 	FVector2D MovementVector = Value.Get<FVector2D>();
 	if (Controller != nullptr)
 	{
@@ -124,6 +126,8 @@ void AGundamRX93Character::Move(const FInputActionValue& Value)
 		AddMovementInput(RightDirection, MovementVector.X);
 		MovementStopped(false);
 	}
+
+	MovementState = EMovementStates::EMS_Running;
 }
 
 void AGundamRX93Character::Look(const FInputActionValue& Value)
@@ -147,10 +151,13 @@ void AGundamRX93Character::MovementStopped(bool Value)
 
 void AGundamRX93Character::Jump()
 {
+	if (MovementState == EMovementStates::EMS_Jumping) return;
+
 	Super::Jump();
 	GetCharacterMovement()->bNotifyApex = true;
 	JumpGravityController->HandleJumpStarted();
 	SetThrusterVFXActive(true);
+	MovementState = EMovementStates::EMS_Jumping;
 }
 
 void AGundamRX93Character::HandleReachedJumpApex()

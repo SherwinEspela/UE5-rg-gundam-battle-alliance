@@ -4,6 +4,7 @@
 #include "ActorComponents/GroundHeightDetectorAC.h"
 
 #define DISTANCE_OFFSET 913.249207f
+#define DISTANCE_RESET 10000.0f
 
 UGroundHeightDetectorAC::UGroundHeightDetectorAC()
 {
@@ -13,7 +14,7 @@ UGroundHeightDetectorAC::UGroundHeightDetectorAC()
 void UGroundHeightDetectorAC::BeginPlay()
 {
 	Super::BeginPlay();
-	bCanMeasure = false;
+	Reset();
 }
 
 void UGroundHeightDetectorAC::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -34,7 +35,7 @@ void UGroundHeightDetectorAC::MeasureGroundDistance()
 void UGroundHeightDetectorAC::Reset()
 {
 	bCanMeasure = false;
-	DistanceToGround = DISTANCE_OFFSET;
+	DistanceToGround = DISTANCE_RESET;
 }
 
 void UGroundHeightDetectorAC::CheckDistanceToGroundByLineTrace()
